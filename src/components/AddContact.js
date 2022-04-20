@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import { v4 as uuid } from 'uuid';
-import api from '../api/contacts';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../redux/contacts/contactsActions';
 
 const AddContact = () => {
+  const dispatch = useDispatch();
+
   const history = useHistory();
 
   const [form, setForm] = useState({
@@ -17,10 +19,9 @@ const AddContact = () => {
     setForm({ ...form, [id]: value });
   };
 
-  const addContact = async (e) => {
+  const addContactHandler = (e) => {
     e.preventDefault();
-    const request = { id: uuid(), ...form };
-    await api.post('contacts', request);
+    dispatch(addContact(form));
     history.push('/');
   };
 
@@ -28,7 +29,7 @@ const AddContact = () => {
     <div className="w-full">
       <div className="max-w-4xl mx-auto w-full space-y-4 py-10 px-5">
         <h1 className="text-3xl font-semibold">Add Contact</h1>
-        <form onSubmit={addContact} className="w-full space-y-6">
+        <form onSubmit={addContactHandler} className="w-full space-y-6">
           <div className="flex flex-col gap-1">
             <label htmlFor="name" className="text-lg font-semibold">
               Name

@@ -1,3 +1,14 @@
 {
-  "contacts": []
+  "contacts": [
+    {
+      "id": "a14f2b57-b97e-4364-b1e6-0f52dca77931",
+      "name": "Mehran Khaksar",
+      "email": "itsaboutmehran@yahoo.com"
+    },
+    {
+      "name": "Mehran Khaksar",
+      "email": "mewhrankhaksar123@yahoo.com",
+      "id": "72b7f444-8d07-44e5-89e8-977a27c87399"
+    }
+  ]
 }
