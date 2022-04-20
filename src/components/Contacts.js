@@ -1,28 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
-import api from '../api/contacts';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { fetchContacts } from '../redux/contacts/contactsActions';
 import { Link } from 'react-router-dom';
 import Contact from './Contact';
 
 const Contacts = () => {
-  const [contactItems, setContactItems] = useState([]);
+  const contactsState = useSelector((state) => state.contacts);
+  const { contacts } = contactsState;
 
-  const retrieveContacts = async () => {
-    const res = await api.get('contacts');
-    return res.data;
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getAllContacts = async () => {
-      const allContacts = await retrieveContacts();
-      if (allContacts) setContactItems(allContacts);
-    };
-
-    getAllContacts();
+    dispatch(fetchContacts());
   }, []);
-
-  console.log(contactItems);
 
   return (
     <div className="w-full">
@@ -37,9 +28,9 @@ const Contacts = () => {
           </Link>
         </div>
         <ul className="w-full space-y-8 pt-5">
-          {contactItems.map((item, idx, contactItems) => (
+          {contacts.map((contact, idx, contactItems) => (
             <>
-              <Contact key={item.id} contactData={item} />
+              <Contact key={contact.id} contactData={contact} />
               <div
                 className={`w-full h-0.5 ${
                   idx + 1 === contactItems.length ? 'hidden' : 'block'

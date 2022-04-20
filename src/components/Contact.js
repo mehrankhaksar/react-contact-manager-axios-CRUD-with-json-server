@@ -1,7 +1,12 @@
 import React from 'react';
+import api from '../api/contacts';
 
 const Contact = ({ contactData }) => {
-  const { name, email } = contactData;
+  const { id, name, email } = contactData;
+
+  const removeContact = async (id) => {
+    api.delete(`contacts/${id}`);
+  };
 
   return (
     <div className="w-full flex justify-between items-center">
@@ -12,9 +17,10 @@ const Contact = ({ contactData }) => {
           <span className="text-lg">{email}</span>
         </div>
       </div>
-      <div>
-        <i className="uil uil-trash-alt text-3xl text-red-500"></i>
-      </div>
+      <i
+        className="uil uil-trash-alt text-3xl text-red-500"
+        onClick={() => removeContact(id)}
+      ></i>
     </div>
   );
 };
