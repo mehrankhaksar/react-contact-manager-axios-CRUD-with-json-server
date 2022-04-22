@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -9,14 +9,29 @@ const AddContact = () => {
 
   const history = useHistory();
 
+  const fileInputRef = useRef();
+
   const [form, setForm] = useState({
+    img: '',
     name: '',
     email: '',
   });
 
   const changeHandler = (e) => {
-    const { id, value } = e.target;
-    setForm({ ...form, [id]: value });
+    const { id, value, files } = e.target;
+    if (id === 'img') {
+      if (files[0].type.substr(0, 5) === 'image') {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onloadend = () => {
+          setForm({ ...form, [id]: reader.result });
+        };
+      } else {
+        alert('Invalid Type!');
+      }
+    } else {
+      setForm({ ...form, [id]: value });
+    }
   };
 
   const addContactHandler = (e) => {
@@ -30,6 +45,34 @@ const AddContact = () => {
       <div className="max-w-4xl mx-auto w-full space-y-4 py-10 px-5">
         <h1 className="text-3xl font-semibold">Add Contact</h1>
         <form onSubmit={addContactHandler} className="w-full space-y-6">
+          {form.img ? (
+            <img
+              src={form.img}
+              alt="Profile"
+              className="w-36 h-36 object-contain rounded-full"
+              onClick={() => setForm({ img: '' })}
+            />
+          ) : (
+            <>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  fileInputRef.current.click();
+                }}
+                className="w-20 h-20 bg-blue-500 rounded-full cursor-pointer"
+              >
+                <i className="uil uil-image-plus text-4xl text-white"></i>
+              </button>
+              <input
+                type="file"
+                id="img"
+                className="hidden"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={changeHandler}
+              />
+            </>
+          )}
           <div className="flex flex-col gap-1">
             <label htmlFor="name" className="text-lg font-semibold">
               Name

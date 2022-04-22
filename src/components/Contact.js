@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { editContact, removeContact } from '../redux/contacts/contactsActions';
 
 const Contact = ({ contactData }) => {
-  const { id, name, email } = contactData;
+  const { id, img, name, email } = contactData;
 
   const dispatch = useDispatch();
+
+  const fileInputRef = useRef();
 
   const [edit, setEdit] = useState(false);
 
   const [editForm, setEditForm] = useState({
+    img: img,
     name: name,
     email: email,
   });
@@ -19,10 +22,32 @@ const Contact = ({ contactData }) => {
     setEditForm({ ...editForm, [id]: value });
   };
 
+  console.log(editForm, img);
+
   return (
     <div className="w-full grid grid-cols-3 place-items-center">
       <div className="col-span-2 w-full flex items-center gap-2">
-        <i className="uil uil-user-circle text-5xl text-gray-600"></i>
+        <div className="relative">
+          {editForm.img ? (
+            <img
+              src={editForm.img}
+              alt="Profile"
+              className="w-24 max-h-20 object-contain rounded-full"
+            />
+          ) : (
+            <i className="uil uil-user-circle text-6xl text-gray-600"></i>
+          )}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              fileInputRef.current.click();
+            }}
+            className="w-7 h-7 flex justify-center items-center absolute right-0 bottom-0 bg-blue-500 rounded-full cursor-pointer z-10"
+          >
+            <i className="uil uil-image-plus text-lg text-white"></i>
+          </button>
+          <input type="file" className="hidden" ref={fileInputRef} />
+        </div>
         {edit ? (
           <div className="space-y-2 text-lg">
             <input
