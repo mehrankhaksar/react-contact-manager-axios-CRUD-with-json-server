@@ -9,8 +9,8 @@ import { Redirect } from 'react-router-dom';
 function App() {
   return (
     <Provider store={store}>
-      <div>
-        <h1 className="text-3xl font-semibold text-center p-5 border-b-2">
+      <div className="space-y-2">
+        <h1 className="text-3xl font-semibold text-center p-5 border-b-2 shadow-sm">
           Contact Manager
         </h1>
         <Switch>

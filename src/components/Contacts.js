@@ -17,12 +17,12 @@ const Contacts = () => {
 
   return (
     <div className="w-full">
-      <div className="max-w-4xl mx-auto w-full space-y-4 p-5">
-        <div className="w-full flex justify-between items-center">
+      <div className="max-w-4xl mx-auto w-full p-5">
+        <div className="w-full flex justify-between items-center pb-5 border-b-2">
           <h3 className="text-2xl font-medium">Contact List</h3>
           <Link
             to="/addcontact"
-            className="text-sm text-white bg-blue-500 py-2 px-3 rounded-sm"
+            className="text-white bg-blue-500 py-2 px-3 rounded shadow-md"
           >
             Add Contact
           </Link>

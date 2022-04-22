@@ -49,7 +49,7 @@ const AddContact = () => {
             <img
               src={form.img}
               alt="Profile"
-              className="w-36 h-36 object-contain rounded-full"
+              className="w-28 h-28 object-contain rounded-full"
               onClick={() => setForm({ img: '' })}
             />
           ) : (
@@ -59,7 +59,7 @@ const AddContact = () => {
                   e.preventDefault();
                   fileInputRef.current.click();
                 }}
-                className="w-20 h-20 bg-blue-500 rounded-full cursor-pointer"
+                className="w-28 h-28 bg-blue-500 rounded-full cursor-pointer"
               >
                 <i className="uil uil-image-plus text-4xl text-white"></i>
               </button>
