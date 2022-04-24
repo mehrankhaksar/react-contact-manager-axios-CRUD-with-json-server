@@ -36,13 +36,13 @@ const Contact = ({ contactData }) => {
 
   return (
     <div className="w-full grid grid-cols-3 place-items-center">
-      <div className="col-span-2 w-full grid grid-cols-3 place-items-center gap-3">
-        <div className="col-span-1 w-full relative">
+      <div className="col-span-2 w-full flex items-center gap-3">
+        <div className="relative">
           {editForm.img ? (
             <img
               src={editForm.img}
               alt="Profile"
-              className="w-full max-h-20 object-cover rounded-full"
+              className="w-20 h-16 object-contain rounded-full shadow-md"
             />
           ) : (
             <i className="uil uil-user-circle text-7xl text-gray-600"></i>
@@ -75,7 +75,7 @@ const Contact = ({ contactData }) => {
           )}
         </div>
         {edit ? (
-          <div className="col-span-2 w-full space-y-2 text-lg">
+          <div className="space-y-2 text-lg">
             <input
               type="text"
               id="name"
