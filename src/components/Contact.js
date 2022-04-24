@@ -69,7 +69,7 @@ const Contact = ({ contactData }) => {
                 className="w-6 h-6 flex justify-center items-center absolute bottom-0 left-0 bg-red-500 rounded-full cursor-pointer z-10"
                 onClick={() => setEditForm({ ...editForm, img: '' })}
               >
-                <i className="uil uil-multiply text-lg text-white"></i>
+                <i className="uil uil-multiply text-white"></i>
               </button>
             </>
           )}

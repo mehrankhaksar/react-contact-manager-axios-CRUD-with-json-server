@@ -154,11 +154,12 @@ export const editContact = (id, editForm) => {
       .put(`contacts/${id}`, editForm)
       .then((res) => {
         const editedContact = res.data;
+        console.log(editedContact);
         dispatch(editContactSuccess(editedContact));
       })
       .catch((err) => {
         const errMsg = err.message;
-        dispatch(removeContactFailure(errMsg));
+        dispatch(editContactFailure(errMsg));
       });
   };
 };
