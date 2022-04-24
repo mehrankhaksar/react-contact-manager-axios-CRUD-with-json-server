@@ -1,6 +1,5 @@
 import api from '../../api/contacts';
 import { v4 as uuid } from 'uuid';
-import axios from 'axios';
 
 export const fetchContactsRequest = () => {
   return {
@@ -39,6 +38,12 @@ export const addContactFailure = (errMsg) => {
   return {
     type: 'ADD_CONTACT_FAILURE',
     payload: errMsg,
+  };
+};
+export const isContactExisted = (isExisted) => {
+  return {
+    type: 'IS_CONTACT_EXISTED',
+    payload: isExisted,
   };
 };
 
@@ -100,21 +105,30 @@ export const fetchContacts = () => {
 
 export const addContact = (contact) => {
   return (dispatch) => {
-    dispatch(addContactRequest());
     const request = {
       id: uuid(),
       ...contact,
     };
-    api
-      .post('contacts', request)
-      .then((res) => {
-        const contact = res.data;
-        dispatch(addContactSuccess(contact));
-      })
-      .catch((err) => {
-        const errMsg = err.message;
-        dispatch(addContactFailure(errMsg));
-      });
+    dispatch(addContactRequest());
+    api.get('contacts').then((res) => {
+      const isExist = !!res.data.find((item) => item.email === request.email);
+      if (isExist) {
+        dispatch(isContactExisted(true));
+        alert('This email address is already being used.');
+      } else {
+        dispatch(isContactExisted(false));
+        api
+          .post('contacts', request)
+          .then((res) => {
+            const contact = res.data;
+            dispatch(addContactSuccess(contact));
+          })
+          .catch((err) => {
+            const errMsg = err.message;
+            dispatch(addContactFailure(errMsg));
+          });
+      }
+    });
   };
 };
 

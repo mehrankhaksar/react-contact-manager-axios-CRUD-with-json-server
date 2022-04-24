@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { addContact } from '../redux/contacts/contactsActions';
 
 const AddContact = () => {
+  const contactsState = useSelector((state) => state.contacts);
+
   const dispatch = useDispatch();
 
   const history = useHistory();
@@ -36,9 +38,18 @@ const AddContact = () => {
 
   const addContactHandler = (e) => {
     e.preventDefault();
-    dispatch(addContact(form));
-    history.push('/');
+    if (form.name !== '' && form.email !== '') {
+      dispatch(addContact(form));
+    } else {
+      alert('Please enter your name and email.');
+    }
   };
+
+  useEffect(() => {
+    if (!contactsState.isExisted && contactsState.isExisted !== null) {
+      history.push('/');
+    }
+  }, [contactsState.isExisted]);
 
   return (
     <div className="w-full">

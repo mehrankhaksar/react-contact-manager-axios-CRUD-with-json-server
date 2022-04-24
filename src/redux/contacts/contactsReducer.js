@@ -3,6 +3,7 @@ import {
   fetchContactsSuccess,
   fetchContactsFailure,
   addContactRequest,
+  isContactExisted,
   addContactSuccess,
   addContactFailure,
   removeContactRequest,
@@ -18,6 +19,7 @@ const initialState = {
   loading: false,
   contacts: [],
   errMsg: '',
+  isExisted: null,
 };
 
 const contactsReducer = (state = initialState, action) => {
@@ -44,6 +46,11 @@ const contactsReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
+    case isContactExisted:
+      return {
+        ...state,
+        isExisted: action.payload,
+      };
     case addContactSuccess:
       if (!state.contacts.find((contact) => contact.id === action.payload.id)) {
         state.contacts.push({ id: uuid(), ...action.payload });
@@ -52,6 +59,8 @@ const contactsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        contacts: [...state.contacts],
+        isExisted: null,
       };
     case addContactFailure:
       return {

@@ -4,6 +4,7 @@ export const fetchContactsFailure = 'FETCH_CONTACTS_FAILURE';
 
 export const addContactRequest = 'ADD_CONTACT_REQUEST';
 export const addContactSuccess = 'ADD_CONTACT_SUCCESS';
+export const isContactExisted = 'IS_CONTACT_EXISTED';
 export const addContactFailure = 'ADD_CONTACT_FAILURE';
 
 export const removeContactRequest = 'REMOVE_CONTACT_REQUEST';
