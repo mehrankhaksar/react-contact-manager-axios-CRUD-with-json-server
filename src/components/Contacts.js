@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchContacts } from '../redux/contacts/contactsActions';
@@ -10,6 +10,20 @@ const Contacts = () => {
   const { contacts } = contactsState;
 
   const dispatch = useDispatch();
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  console.log(searchTerm.toLowerCase());
+
+  const newContacts = contacts.filter((contact) =>
+    Object.values(contact)
+      .slice(2, 4)
+      .join('')
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
+
+  console.log(newContacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -27,8 +41,17 @@ const Contacts = () => {
             Add Contact
           </Link>
         </div>
-        <ul className="w-full space-y-8 pt-5">
-          {contacts.map((contact, idx, contactItems) => (
+        <div className="w-full relative py-5">
+          <input
+            type="text"
+            value={searchTerm}
+            className="w-full py-1.5 px-2 border-2 rounded"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <i className="uil uil-search-alt absolute top-1/2 -translate-y-1/2 right-2.5 text-2xl bg-transparent z-10"></i>
+        </div>
+        <ul className="w-full space-y-8">
+          {newContacts?.map((contact, idx, contactItems) => (
             <>
               <Contact key={contact.id} contactData={contact} />
               <div
